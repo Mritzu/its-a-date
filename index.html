@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Someone Special</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffe6e6;
+            margin: 0;
+            font-family: 'Dancing Script', cursive;
+            overflow: hidden;
+        }
+        .heart {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            transform: rotate(-45deg);
+            margin: 20px;
+            animation: heartbeat 1s infinite;
+        }
+        .heart::before,
+        .heart::after {
+            content: "";
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            border-radius: 50%;
+        }
+        .heart::before {
+            top: -50px;
+            left: 0;
+        }
+        .heart::after {
+            left: 50px;
+            top: 0;
+        }
+        h1 {
+            color: red;
+            text-align: center;
+            animation: fadeIn 2s;
+        }
+        .buttons {
+            display: flex;
+            gap: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            animation: fadeIn 2s;
+            font-family: 'Dancing Script', cursive;
+        }
+        button:hover {
+            background-color: darkred;
+        }
+        .message {
+            display: none;
+            margin-top: 20px;
+            font-size: 1.5rem;
+            color: red;
+            animation: fadeIn 2s;
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            animation: confetti 5s linear infinite;
+        }
+        .yes-image, .no-image {
+            display: none;
+            margin-top: 20px;
+            width: 200px;
+            height: auto;
+            animation: fadeIn 2s;
+        }
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1) rotate(-45deg);
+            }
+            50% {
+                transform: scale(1.1) rotate(-45deg);
+            }
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes confetti {
+            0% {
+                transform: translateY(0) rotate(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <audio id="background-audio">
+        <source src="./phela-phela-pyaar .mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <audio id="no-audio">
+        <source src="./tere-bin-mar-ja-ge-babbumaan.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <div class="heart"></div>
+    <h1>A Date with me???</h1>
+    <div class="buttons">
+        <button onclick="showMessage()">Yes</button>
+        <button onclick="showNoMessage()">No</button>
+    </div>
+    <div class="message" id="message">Kaha chale QT? Love you 3000!</div>
+    <div class="message" id="no-message">koi baat nai, mai akela khaa leta huu!</div>
+    <img src="./happy-love-teddy.gif" alt="Happy Dance" class="yes-image" id="yes-image" loop=infinite>
+    <img src="./eadable-dates.avif" alt="Sad Image" class="no-image" id="no-image">
+    <script>
+        function showMessage() {
+            const message = document.getElementById('message');
+            message.style.display = 'block';
+            message.classList.add('fadeIn');
+            createConfetti();
+            playAudio();
+            showYesImage();
+        }
+
+        function showNoMessage() {
+            const noMessage = document.getElementById('no-message');
+            noMessage.style.display = 'block';
+            noMessage.classList.add('fadeIn');
+            playNoAudio();
+            showNoImage();
+        }
+
+        function createConfetti() {
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = `${Math.random() * 100}vw`;
+                confetti.style.top = `${Math.random() * -100}vh`;
+                confetti.style.backgroundColor = getRandomColor();
+                document.body.appendChild(confetti);
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+            setTimeout(createConfetti, 1000); // Loop confetti creation
+        }
+
+        function getRandomColor() {
+            const colors = ['#ff4d4d', '#ff6666', '#ff8080', '#ff9999', '#ffb3b3'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        function playAudio() {
+            const audio = document.getElementById('background-audio');
+            audio.play();
+        }
+
+        function playNoAudio() {
+            const noAudio = document.getElementById('no-audio');
+            noAudio.play();
+        }
+
+        function showYesImage() {
+            const yesImage = document.getElementById('yes-image');
+            yesImage.style.display = 'block';
+            yesImage.classList.add('fadeIn');
+            // Reset the src attribute to restart the GIF
+            yesImage.src = yesImage.src;
+        }
+
+        function showNoImage() {
+            const noImage = document.getElementById('no-image');
+            noImage.style.display = 'block';
+            noImage.classList.add('fadeIn');
+        }
+    </script>
+</body>
+</html>
